@@ -300,12 +300,12 @@ def savenpy(id, annos, filelist, data_path, prep_folder):
         os.path.exists(os.path.join(prep_folder,name+'_origin.npy')) and \
         os.path.exists(os.path.join(prep_folder,name+'_label.npy')):
         if not isflip:
-            print 'skip', name
+            print ('skip', name)
             return
         else:
             missingmask = True
 
-    print 'process', name
+    print ('process', name)
     label = annos[annos[:,0]==name]
     # label = label.astype('float')
     label = label[:, [3,1,2,4]].astype('float') # z, y, x, d
@@ -316,7 +316,7 @@ def savenpy(id, annos, filelist, data_path, prep_folder):
     newshape = np.round(np.array(Mask.shape) * spacing / resolution)
     xx,yy,zz = np.where(Mask)
     if xx.size == 0 or yy.size == 0 or zz.size == 0:
-        print name 
+        print (name)
         assert 1 == 0
 
     box = np.array([[np.min(xx), np.max(xx)], [np.min(yy), np.max(yy)], [np.min(zz), np.max(zz)]])
@@ -326,7 +326,7 @@ def savenpy(id, annos, filelist, data_path, prep_folder):
     extendbox = np.vstack([np.max([[0,0,0],box[:,0]-margin],0),np.min([newshape,box[:,1]+2*margin],axis=0).T]).T
     extendbox = extendbox.astype('int')
     if extendbox[0,0] == extendbox[0,1] or extendbox[1,0] == extendbox[1,1] or extendbox[2,0] == extendbox[2,1]:
-        print name
+        print (name)
         assert 1==0
 
     convex_mask = m1
@@ -336,7 +336,7 @@ def savenpy(id, annos, filelist, data_path, prep_folder):
     Mask = m1+m2
     if missingmask:
         np.save(os.path.join(prep_folder,name+'_mask.npy'), Mask)
-        print 'skip', name
+        print ('skip', name)
         return
     extramask = dilatedMask - Mask
     bone_thresh = 210
@@ -355,11 +355,11 @@ def savenpy(id, annos, filelist, data_path, prep_folder):
     np.save(os.path.join(prep_folder,name+'_originbox.npy'), extendbox)
     np.save(os.path.join(prep_folder,name+'_spacing.npy'), spacing)
     np.save(os.path.join(prep_folder,name+'_origin.npy'), origin)
-    print im.shape, '_clean', sliceim.shape, '_originbox', extendbox.shape, '_space', spacing, '_origin', origin
+    print (im.shape, '_clean', sliceim.shape, '_originbox', extendbox.shape, '_space', spacing, '_origin', origin)
 
     this_annos = np.copy(annos[annos[:,0]==name])
     label = []
-    print 'label', this_annos.shape, name
+    print ('label', this_annos.shape, name)
     if len(this_annos)>0:
         
         for c in this_annos:
@@ -378,7 +378,7 @@ def savenpy(id, annos, filelist, data_path, prep_folder):
         label2[:3] = label2[:3]-np.expand_dims(extendbox[:,0],1)
         label2 = label2[:4].T
     np.save(os.path.join(prep_folder,name+'_label.npy'),label2)
-    print name
+    print (name)
 
 def full_prep(train=True, val=True, test=True):
     warnings.filterwarnings("ignore")
@@ -581,7 +581,7 @@ def preprocess_luna():
         if not os.path.exists(savepath):
             os.mkdir(savepath)
         for setidx in xrange(10):
-            print 'process subset', setidx
+            print ('process subset', setidx)
             filelist = [f.split('.mhd')[0] for f in os.listdir(luna_data+'subset'+str(setidx)) if f.endswith('.mhd') ]
             if not os.path.exists(savepath+'subset'+str(setidx)):
                 os.mkdir(savepath+'subset'+str(setidx))

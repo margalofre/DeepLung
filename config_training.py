@@ -25,5 +25,5 @@ config = {'train_data_path':['$DOWNLOADLUNA16PATH/subset0/',
           'luna_segment':'$LUNA16SEGMENTATIONPATH/luna16/seg-lungs-LUNA16/', # download from https://luna16.grand-challenge.org/data/
           'preprocess_result_path':'$LUNA16PROPOCESSPATH/',
           'luna_data':'$DOWNLOADLUNA16PATH/',
-          'luna_label':'$LUNA16ANNOTATIONPATH/luna16/CSVFILES/annotations.csv'
+          'luna_label':'/home/mar.galofre/deeplung_experimental/deeplung_detector_FastCRNN/evaluationScript/annotations.csv'
          } 

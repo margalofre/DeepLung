@@ -508,7 +508,7 @@ def plothistdiameter(trainpath='/media/data1/wentao/tianchi/preprocessing/newtra
 def getrecall(path='/media/data1/wentao/tianchi/CTnoddetector/training/detector/results/res18/baselinebboxlranchorftbig/test55test/'):
     thresh = np.linspace(-15, 0, 31)
     p = 0
-    print thresh.shape, thresh
+    print (thresh.shape, thresh)
     # print recall.size
     tot = 0
     for fname in os.listdir(path):
@@ -518,7 +518,7 @@ def getrecall(path='/media/data1/wentao/tianchi/CTnoddetector/training/detector/
     tot = 0
     for fname in os.listdir(path):
         if fname.endswith('_lbb.npy'):
-            print fname
+            print (fname)
             label = np.load(path+fname, 'r')
             p += label.shape[0]
             pbb = np.load(path+fname[:-8]+'_pbb.npy', 'r')
@@ -545,8 +545,8 @@ def getrecall(path='/media/data1/wentao/tianchi/CTnoddetector/training/detector/
                 # print th, tp
             tot += 1
     recall /= p 
-    print 'p', p
-    print recall.sum(axis=1)
+    print ('p', p)
+    print (recall.sum(axis=1))
     fig = plt.figure()
     plt.plot(thresh, recall.sum(axis=1))
     plt.xlabel('Threshold (before sigmoid)')
@@ -573,7 +573,7 @@ def getrecallwrtdetp(path='/media/data1/wentao/tianchi/CTnoddetector/training/de
             tot += 1
             label = np.load(path+fname, 'r')
             p += label.shape[0]
-    print thresh.shape, thresh, tot, p, seriesuidgt[0]
+    print (thresh.shape, thresh, tot, p, seriesuidgt[0])
     recall = np.zeros((thresh.shape[0],))
     colnames = ['seriesuid', 'coordX', 'coordY', 'coordZ', 'probability']
     for thi in xrange(thresh.shape[0]):
@@ -611,7 +611,7 @@ def getrecallwrtdetp(path='/media/data1/wentao/tianchi/CTnoddetector/training/de
                         float(coordYremain[coordi])
                         float(coordZremain[coordi])
                     except:
-                        print coordXremain[coordi], coordYremain[coordi], coordZremain[coordi]
+                        print (coordXremain[coordi], coordYremain[coordi], coordZremain[coordi])
                     dist = math.pow(float(coordXremain[coordi]) - labelx[labeli], 2.0)
                     dist += math.pow(float(coordYremain[coordi]) - labely[labeli], 2.0)
                     dist += math.pow(float(coordZremain[coordi]) - labelz[labeli], 2.0)
@@ -622,7 +622,7 @@ def getrecallwrtdetp(path='/media/data1/wentao/tianchi/CTnoddetector/training/de
                 if sum(labelsignlist) == label.shape[0]:
                     break
     recall /= float(p)
-    print recall
+    print (recall)
 
     fig = plt.figure()
     plt.plot(thresh, recall)
